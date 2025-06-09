@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Today's Key Financial Rates</title>
+  <title>Finance Dashboard</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -10,7 +11,7 @@
       margin: 40px;
       color: #333;
     }
-    h1 {
+    h1, h2 {
       text-align: center;
       color: #2c3e50;
     }
@@ -38,6 +39,14 @@
       padding: 10px;
       font-size: 0.9em;
       color: #555;
+    }
+    .controls {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .chart-container {
+      width: 90%;
+      margin: 0 auto;
     }
   </style>
 </head>
@@ -70,6 +79,45 @@
     </tbody>
     <caption>Data as of June 5, 2025</caption>
   </table>
+
+  <h2>Stock Price History (Past 3 Years)</h2>
+  <div class="controls">
+    <label><input type="checkbox" id="AAPL" checked> AAPL</label>
+    <label><input type="checkbox" id="NVDA" checked> NVDA</label>
+    <label><input type="checkbox" id="TSM" checked> TSM</label>
+  </div>
+  <div class="chart-container">
+    <div id="chart" style="height: 500px;"></div>
+  </div>
+
+  <script>
+    const dates = ['2022-06-01', '2022-12-01', '2023-06-01', '2023-12-01', '2024-06-01', '2024-12-01', '2025-06-01'];
+    const stockData = {
+      AAPL: [140, 150, 160, 155, 170, 180, 190],
+      NVDA: [160, 200, 250, 300, 350, 400, 450],
+      TSM:  [90, 95, 100, 110, 115, 120, 130]
+    };
+
+    function getTraces() {
+      return Object.keys(stockData)
+        .filter(stock => document.getElementById(stock).checked)
+        .map(stock => ({
+          x: dates,
+          y: stockData[stock],
+          mode: 'lines+markers',
+          name: stock
+        }));
+    }
+
+    function plotChart() {
+      Plotly.newPlot('chart', getTraces(), { title: 'Stock Prices Over Time' });
+    }
+
+    document.querySelectorAll('.controls input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', plotChart);
+    });
+
+    plotChart();  // Initial plot
+  </script>
 </body>
 </html>
-
