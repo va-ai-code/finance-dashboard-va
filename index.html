@@ -4,120 +4,44 @@
   <meta charset="UTF-8">
   <title>Finance Dashboard</title>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f8;
-      margin: 40px;
-      color: #333;
-    }
-    h1, h2 {
-      text-align: center;
-      color: #2c3e50;
-    }
-    table {
-      margin: 0 auto;
-      border-collapse: collapse;
-      width: 60%;
-      background-color: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    th, td {
-      padding: 14px 20px;
-      border-bottom: 1px solid #ddd;
-      text-align: left;
-    }
-    th {
-      background-color: #2980b9;
-      color: white;
-    }
-    tr:hover {
-      background-color: #f1f1f1;
-    }
-    caption {
-      caption-side: bottom;
-      padding: 10px;
-      font-size: 0.9em;
-      color: #555;
-    }
-    .controls {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .chart-container {
-      width: 90%;
-      margin: 0 auto;
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1>Today's Key Financial Rates</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Indicator</th>
-        <th>Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Federal Funds Rate (Target Range)</td>
-        <td>4.25% – 4.50%</td>
-      </tr>
-      <tr>
-        <td>30-Year Fixed Mortgage Rate</td>
-        <td>6.90%</td>
-      </tr>
-      <tr>
-        <td>10-Year Treasury Yield</td>
-        <td>4.37%</td>
-      </tr>
-      <tr>
-        <td>Gold Price (per Ounce)</td>
-        <td>$3,384.11</td>
-      </tr>
-    </tbody>
-    <caption>Data as of June 5, 2025</caption>
-  </table>
+<body class="bg-gray-100 text-gray-800 p-6">
 
-  <h2>Stock Price History (Past 3 Years)</h2>
-  <div class="controls">
-    <label><input type="checkbox" id="AAPL" checked> AAPL</label>
-    <label><input type="checkbox" id="NVDA" checked> NVDA</label>
-    <label><input type="checkbox" id="TSM" checked> TSM</label>
-  </div>
-  <div class="chart-container">
-    <div id="chart" style="height: 500px;"></div>
+  <h1 class="text-4xl font-bold text-center text-blue-800 mb-8">Today's Key Financial Rates</h1>
+
+  <div class="overflow-x-auto mx-auto max-w-3xl bg-white rounded-xl shadow-lg mb-12">
+    <table class="w-full text-left">
+      <thead>
+        <tr class="bg-blue-700 text-white">
+          <th class="p-4">Indicator</th>
+          <th class="p-4">Value</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr class="hover:bg-gray-50">
+          <td class="p-4">Federal Funds Rate (Target Range)</td>
+          <td class="p-4">4.25% – 4.50%</td>
+        </tr>
+        <tr class="hover:bg-gray-50">
+          <td class="p-4">30-Year Fixed Mortgage Rate</td>
+          <td class="p-4">6.90%</td>
+        </tr>
+        <tr class="hover:bg-gray-50">
+          <td class="p-4">10-Year Treasury Yield</td>
+          <td class="p-4">4.37%</td>
+        </tr>
+        <tr class="hover:bg-gray-50">
+          <td class="p-4">Gold Price (per Ounce)</td>
+          <td class="p-4">$3,384.11</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-sm text-gray-500 text-center py-2">Data as of June 5, 2025</div>
   </div>
 
-  <script>
-    const dates = ['2022-06-01', '2022-12-01', '2023-06-01', '2023-12-01', '2024-06-01', '2024-12-01', '2025-06-01'];
-    const stockData = {
-      AAPL: [140, 150, 160, 155, 170, 180, 190],
-      NVDA: [160, 200, 250, 300, 350, 400, 450],
-      TSM:  [90, 95, 100, 110, 115, 120, 130]
-    };
+  <h2 class="text-2xl font-semibold text-center text-blue-800 mb-4">Stock Price History (Past 3 Years)</h2>
 
-    function getTraces() {
-      return Object.keys(stockData)
-        .filter(stock => document.getElementById(stock).checked)
-        .map(stock => ({
-          x: dates,
-          y: stockData[stock],
-          mode: 'lines+markers',
-          name: stock
-        }));
-    }
+  <div class="flex justify-center space-x-6 mb-4">
+    <label class="flex items-center space-x-2"><input type="checkbox" id="AAPL" checked class="accent-blue-700"> <s
 
-    function plotChart() {
-      Plotly.newPlot('chart', getTraces(), { title: 'Stock Prices Over Time' });
-    }
-
-    document.querySelectorAll('.controls input[type="checkbox"]').forEach(cb => {
-      cb.addEventListener('change', plotChart);
-    });
-
-    plotChart();  // Initial plot
-  </script>
-</body>
-</html>
