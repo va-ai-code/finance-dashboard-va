@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Finance Dashboard</title>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-800 p-6">
@@ -49,7 +49,7 @@
   </div>
 
   <div class="mx-auto max-w-6xl bg-white rounded-xl shadow-md p-4">
-    <div id="chart" class="h-[500px]"></div>
+    <div id="chart" class="w-full" style="height:500px;"></div>
   </div>
 
   <script>
@@ -72,14 +72,21 @@
     }
 
     function plotChart() {
-      Plotly.newPlot('chart', getTraces(), { title: 'Stock Prices Over Time' });
+      Plotly.newPlot('chart', getTraces(), {
+        margin: { t: 50 },
+        title: { text: 'Stock Prices Over Time', font: { size: 20 } },
+        xaxis: { title: 'Date' },
+        yaxis: { title: 'Price (USD)' }
+      });
     }
 
     document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
       cb.addEventListener('change', plotChart);
     });
 
-    plotChart();
+    // Initial plot
+    window.onload = plotChart;
   </script>
+
 </body>
 </html>
