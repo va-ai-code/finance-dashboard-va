@@ -43,5 +43,43 @@
   <h2 class="text-2xl font-semibold text-center text-blue-800 mb-4">Stock Price History (Past 3 Years)</h2>
 
   <div class="flex justify-center space-x-6 mb-4">
-    <label class="flex items-center space-x-2"><input type="checkbox" id="AAPL" checked class="accent-blue-700"> <s
+    <label class="flex items-center space-x-2"><input type="checkbox" id="AAPL" checked class="accent-blue-700"> <span>AAPL</span></label>
+    <label class="flex items-center space-x-2"><input type="checkbox" id="NVDA" checked class="accent-blue-700"> <span>NVDA</span></label>
+    <label class="flex items-center space-x-2"><input type="checkbox" id="TSM" checked class="accent-blue-700"> <span>TSM</span></label>
+  </div>
 
+  <div class="mx-auto max-w-6xl bg-white rounded-xl shadow-md p-4">
+    <div id="chart" class="h-[500px]"></div>
+  </div>
+
+  <script>
+    const dates = ['2022-06-01', '2022-12-01', '2023-06-01', '2023-12-01', '2024-06-01', '2024-12-01', '2025-06-01'];
+    const stockData = {
+      AAPL: [140, 150, 160, 155, 170, 180, 190],
+      NVDA: [160, 200, 250, 300, 350, 400, 450],
+      TSM:  [90, 95, 100, 110, 115, 120, 130]
+    };
+
+    function getTraces() {
+      return Object.keys(stockData)
+        .filter(stock => document.getElementById(stock).checked)
+        .map(stock => ({
+          x: dates,
+          y: stockData[stock],
+          mode: 'lines+markers',
+          name: stock
+        }));
+    }
+
+    function plotChart() {
+      Plotly.newPlot('chart', getTraces(), { title: 'Stock Prices Over Time' });
+    }
+
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', plotChart);
+    });
+
+    plotChart();
+  </script>
+</body>
+</html>
